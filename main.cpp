@@ -49,22 +49,42 @@ int login(){
     return 1;
 }
 
-void registrarUsuario(){
+int registrarUsuario(){
     system("CLS");
+    Usuario userN;
+    Usuario userBuff;
     FILE *arch;
-    arch=fopen("Usuarios.txt")
-    char user[10];
-    char pass1[20];
-    char pass2[20];
+    arch=fopen("Usuarios.data","ab");
+    fclose(arch);
+    char pass1[10];
+    char pass2[10];
     printf("\nDigite el username: ");
-    LeeCadena(user);
+    LeeCadena(userN.name);
     printf("\nDigite la password: ");
     LeeCadena(pass1);
     printf("\nConfirme la password: ");
     LeeCadena(pass2);
     int i = strcmp(pass1,pass2);
     if (i==0){
-        fopen()
+        strcpy(userN.pass,pass1);
+        arch=fopen("Usuarios.data","rb");
+        int cont = 0;
+        while(!feof(arch)){
+            cont++;
+            fread(&userBuff,sizeof(Usuario),1,arch);
+            if(strcmp(userN.name,userBuff.name)==0){
+                return -1; //El usuario ya existe
+            }
+        }
+        fclose(arch);
+        cont++;
+        arch = fopen("Usuarios.data","ab");
+        userN.id=cont;
+        fwrite(&userN,sizeof(Usuario),1,arch);
+        fclose(arch);
+        return 0; //Registro exitoso
+    }else{
+        return -2; //Contraseñas no coinciden
     }
 
 
@@ -100,8 +120,23 @@ int main()
             Agregar();
             break;
         case 0:
-            registrarUsuario();
+            {
+            int r = registrarUsuario();
+            switch(r){
+                case -1:
+                    printf("Error: El usuario ya existe\n");
+                    break;
+                case -2:
+                    printf("Error: Las constraseñas no coinciden\n");
+                    break;
+                case 0:
+                    printf("Usuario registrado correctamente\n");
+                    break;
+            }
+            system("PAUSE");
+
             break;
+            }
         case 5:
             printf("Hasta luego");
             return(0);
