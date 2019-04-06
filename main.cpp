@@ -5,7 +5,7 @@
 using namespace std;
 
 typedef struct Articulo{
-int id;
+int CB;
 int cantidad;
 char nombreMarca[20];
 int precioCompra;
@@ -43,6 +43,17 @@ void Actualizar(){
 void Eliminar(){
 }
 void Agregar(){
+    system("CLS");
+    Articulo ar;
+    Articulo arBuff;
+    FILE *arch;
+    arch=fopen("Inventario.data","ab");
+    printf("Agregar un articulo al inventario.\n");
+    printf("Digite el Codigo de barras\n");
+    scanf("%d",&ar.CB);
+    printf("Digite el nombre del producto\n");
+    LeeCadena(ar.nombreMarca);
+
 }
 int login(){
     system("CLS");
