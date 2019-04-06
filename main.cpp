@@ -4,16 +4,33 @@ using namespace std;
 struct Articulo{
 int id;
 int cantidad;
-char nombreMarca;
+char nombreMarca[20];
 int precioCompra;
 int precioVenta;
 };
 struct Usuario{
 int id;
-char name;
-char pass;
+char name[10];
+char pass[10];
 
 };
+int LeeCadena(char *cl) {
+    int i = 0;
+    char car;
+    do{
+        car = getchar();
+    }while ((car == '\n')||(car == '\t')||(car == ' '));//quita blancos
+    if (car != '\n') {
+        cl[i] = car;
+        i++;
+    }
+    while ((car = getchar()) != '\n') {
+        cl[i] = car;
+        i++;
+    }
+    cl[i] = '\0';
+    return i;
+}
 void Consulta(){
 
 }
@@ -30,9 +47,9 @@ int login(){
 
 void registrarUsuario(){
     system("CLS");
-    char user
+    char user;
     printf("\nDigite el username: ");
-    scanf
+    LeeCadena(user);
 
 }
 int main()
