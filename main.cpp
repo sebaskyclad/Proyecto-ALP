@@ -1,5 +1,7 @@
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 using namespace std;
 
 typedef struct Articulo{
@@ -44,14 +46,27 @@ void Agregar(){
 }
 int login(){
 
-    return 0;
+    return 1;
 }
 
 void registrarUsuario(){
     system("CLS");
-    char user;
+    FILE *arch;
+    arch=fopen("Usuarios.txt")
+    char user[10];
+    char pass1[20];
+    char pass2[20];
     printf("\nDigite el username: ");
     LeeCadena(user);
+    printf("\nDigite la password: ");
+    LeeCadena(pass1);
+    printf("\nConfirme la password: ");
+    LeeCadena(pass2);
+    int i = strcmp(pass1,pass2);
+    if (i==0){
+        fopen()
+    }
+
 
 }
 int main()
@@ -62,6 +77,7 @@ int main()
     int opcion = 0;
     printf("-*-Bienvenido al sistema de inventario-*-\n");
     while(opcion!=-1){
+        system("CLS");
        printf("Seleccione la opcion\n");
        printf("1. Consultar inventario\n");
        printf("2. Actualizar artículos del inventario\n");
@@ -89,6 +105,8 @@ int main()
         case 5:
             printf("Hasta luego");
             return(0);
+        default:
+            printf("Funcion incorrecta");
        }
     }
     }
