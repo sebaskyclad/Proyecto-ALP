@@ -1,19 +1,21 @@
 #include <iostream>
 #include <stdio.h>
 using namespace std;
-struct Articulo{
+
+typedef struct Articulo{
 int id;
 int cantidad;
 char nombreMarca[20];
 int precioCompra;
 int precioVenta;
-};
-struct Usuario{
+}Articulo;
+
+typedef struct Usuario{
 int id;
 char name[10];
 char pass[10];
+}Usuario;
 
-};
 int LeeCadena(char *cl) {
     int i = 0;
     char car;
