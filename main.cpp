@@ -45,8 +45,27 @@ void Eliminar(){
 void Agregar(){
 }
 int login(){
-
-    return 1;
+    system("CLS");
+    Usuario userN;
+    Usuario userBuff;
+    FILE *arch;
+    arch=fopen("Usuarios.data","rb");
+        printf("Digite sus credenciales.");
+    printf("\nDigite el username: ");
+    LeeCadena(userN.name);
+    printf("\nDigite la password: ");
+    LeeCadena(userN.pass);
+    while(!feof(arch)){
+            fread(&userBuff,sizeof(Usuario),1,arch);
+            if(strcmp(userN.name,userBuff.name)==0&&strcmp(userN.pass,userBuff.pass)==0){
+                fclose(arch);
+                return 0; //Contraseñas correctas
+            }
+    }
+    fclose(arch);
+    printf("Credenciales equivocadas, vuelva a intentarlo\n");
+    system("PAUSE");
+    return -1;
 }
 
 int registrarUsuario(){
@@ -91,9 +110,11 @@ int registrarUsuario(){
 }
 int main()
 {
+
     int loginR;
+    while(loginR!=0){
     loginR =login();
-    if (loginR==1){
+    }
     int opcion = 0;
     printf("-*-Bienvenido al sistema de inventario-*-\n");
     while(opcion!=-1){
@@ -144,8 +165,5 @@ int main()
             printf("Funcion incorrecta");
        }
     }
-    }
-    else{
-        printf("Error en el login");
-    }
+
 }
