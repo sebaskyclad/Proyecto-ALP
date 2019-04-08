@@ -19,17 +19,13 @@ char name[10];
 char pass[10];
 }Usuario;
 
-int es_entero(char const *s)
-{
-   int i;
+typedef struct Bitacora{
+char usuario[10];
+char accion[10];
+char resultado[10];
+}Bitacora;
 
-   i = (s[0] == '+' || s[0] == '-') ? 1 : 0;
-
-   while (isdigit(s[i]))
-      i++;
-
-   return s[i] == '\n';
-}
+char usuarioActual[10];
 
 int LeeCadena(char *cl) {
     int i = 0;
@@ -102,6 +98,7 @@ int login(){
             fread(&userBuff,sizeof(Usuario),1,arch);
             if(strcmp(userN.name,userBuff.name)==0&&strcmp(userN.pass,userBuff.pass)==0){
                 fclose(arch);
+                strcpy(usuarioActual,userN.name);
                 return 0; //Contraseñas correctas
             }
     }
@@ -151,6 +148,56 @@ int registrarUsuario(){
 
 
 }
+void Evento(int evento){
+    Bitacora Bit;
+    FILE *arch;
+    arch=fopen("Eventos.data","ab");
+    switch(evento){
+    case 0: //Login Exitoso
+        strcpy(Bit.usuario,usuarioActual);
+        strcpy(Bit.accion,"Login");
+        strcpy(Bit.resultado,"Exitoso");
+        fwrite(&Bit,sizeof(Bit),1,arch);
+    case 1: //Consulta
+        strcpy(Bit.usuario,usuarioActual);
+        strcpy(Bit.accion,"Login");
+        strcpy(Bit.resultado,"Exitoso");
+        fwrite(&Bit,sizeof(Bit),1,arch);
+      case 2: //Modificacion fallida
+        strcpy(Bit.usuario,usuarioActual);
+        strcpy(Bit.accion,"Login");
+        strcpy(Bit.resultado,"Exitoso");
+        fwrite(&Bit,sizeof(Bit),1,arch);
+      case 3: //Modificaci exutisa
+        strcpy(Bit.usuario,usuarioActual);
+        strcpy(Bit.accion,"Login");
+        strcpy(Bit.resultado,"Exitoso");
+        fwrite(&Bit,sizeof(Bit),1,arch);
+      case 4: //Consulta
+        strcpy(Bit.usuario,usuarioActual);
+        strcpy(Bit.accion,"Login");
+        strcpy(Bit.resultado,"Exitoso");
+        fwrite(&Bit,sizeof(Bit),1,arch);
+      case 5: //Consulta
+        strcpy(Bit.usuario,usuarioActual);
+        strcpy(Bit.accion,"Login");
+        strcpy(Bit.resultado,"Exitoso");
+        fwrite(&Bit,sizeof(Bit),1,arch);
+      case 6: //Consulta
+        strcpy(Bit.usuario,usuarioActual);
+        strcpy(Bit.accion,"Login");
+        strcpy(Bit.resultado,"Exitoso");
+        fwrite(&Bit,sizeof(Bit),1,arch);
+      case 7: //Consulta
+        strcpy(Bit.usuario,usuarioActual);
+        strcpy(Bit.accion,"Login");
+        strcpy(Bit.resultado,"Exitoso");
+        fwrite(&Bit,sizeof(Bit),1,arch);
+    }
+        fclose(arch);
+
+
+}
 int main()
 {
 
@@ -158,6 +205,7 @@ int main()
     while(loginR!=0){
     loginR =login();
     }
+    Evento(0);
     char opcion = '0';
     printf("-*-Bienvenido al sistema de inventario-*-\n");
     while(opcion!='5'){
