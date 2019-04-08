@@ -1,7 +1,10 @@
 # depslib dependency file v1.0
-1554568462 source:c:\users\sebastian\codeblocks\papeleriainv\main.cpp
+1554703415 source:c:\users\sebastian\codeblocks\papeleriainv\main.cpp
 	<iostream>
 	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
 
 1554580234 source:d:\users\artur\codeblocks workspace\proyecto-alp\main.cpp
 	<iostream>
