@@ -4,7 +4,6 @@
 #include <string.h>
 #include <ctype.h>
 using namespace std;
-
 typedef struct Articulo{
 int CB;
 int cantidad;
@@ -12,21 +11,17 @@ char nombreMarca[20];
 int precioCompra;
 int precioVenta;
 }Articulo;
-
 typedef struct Usuario{
 int id;
 char name[10];
 char pass[10];
 }Usuario;
-
 typedef struct Bitacora{
 char usuario[10];
-char accion[10];
+char accion[20];
 char resultado[10];
 }Bitacora;
-
 char usuarioActual[10];
-
 int LeeCadena(char *cl) {
     int i = 0;
     char car;
@@ -45,11 +40,69 @@ int LeeCadena(char *cl) {
     return i;
 }
 void Consulta(){
-
+    system("cls");
+    Articulo ar;
+    FILE *arch;
+    arch=fopen("Inventario.data","rb");
+    printf("\nCodigo de Barra\tNombre del producto\tCantidad\tPrecio de compra\tPrecio de venta\n");
+    while(!feof(arch))
+    {
+    	fread(&ar,sizeof(Articulo),1,arch);
+    	printf("%d\t%s\t%d\t%d\t%d\n",ar.CB,ar.nombreMarca,ar.cantidad,ar.precioCompra,ar.precioVenta);
+    }
+    system("pause");
+	fclose(arch);
+}
+void ConsultaB(){
+    system("cls");
+    Bitacora B;
+    FILE *arch;
+    arch=fopen("Eventos.data","rb");
+    printf("Usuario\tAcciontResultado\n");
+    while(!feof(arch))
+    {
+    	fread(&B,sizeof(Bitacora),1,arch);
+    	printf("%s\t%s\t%s\n",B.usuario,B.accion,B.resultado);
+    }
+    system("pause");
+	fclose(arch);
 }
 void Actualizar(){
 }
 void Eliminar(){
+            system("cls");
+            FILE *file, *fileAux;
+            Articulo ar;
+            fileAux=fopen("InventarioAux.data","wb");
+            file=fopen("Inventario.data","rb");
+            if(!file){
+                printf("No hay nada en el archivo\n");
+            }
+            else{
+                int cb;
+                printf("Escribe el codigo de barra del producto a borrar:\n");
+                fflush(stdin);
+                scanf("%d",&cb);
+                //Recibe los mismo parametros que fwrite
+                while(fread(&ar, sizeof(Articulo),1, file)){
+
+                    if (ar.CB!=cb){
+                    fwrite(&ar, sizeof(Articulo),1, fileAux);
+                    }
+                }
+                fileAux=fopen("InventarioAux.data","rb");
+                file=fopen("Inventario.data","wb");
+                while(fread(&ar, sizeof(Articulo),1, fileAux)){
+
+                    fwrite(&ar, sizeof(Articulo),1, file);
+                }
+
+            }
+            fclose(file);
+            fclose(fileAux);
+
+
+
 }
 int Agregar(){
     system("CLS");
@@ -107,7 +160,6 @@ int login(){
     system("PAUSE");
     return -1;
 }
-
 int registrarUsuario(){
     system("CLS");
     Usuario userN;
@@ -160,7 +212,7 @@ void Evento(int evento){
         fwrite(&Bit,sizeof(Bit),1,arch);
     case 1: //Consulta
         strcpy(Bit.usuario,usuarioActual);
-        strcpy(Bit.accion,"Login");
+        strcpy(Bit.accion,"Consulta Inventario");
         strcpy(Bit.resultado,"Exitoso");
         fwrite(&Bit,sizeof(Bit),1,arch);
       case 2: //Modificacion fallida
@@ -216,13 +268,15 @@ int main()
        printf("2. Actualizar artículos del inventario\n");
        printf("3. Eliminar artículos del inventario\n");
        printf("4. Agregar al artículos al inventario\n");
-       printf("0. Registrar usuario\n");
-       printf("5. Salir\n");
+       printf("5. Registrar usuario\n");
+       printf("6. Consultar Bitacora\n");
+       printf("7. Salir\n");
        scanf("%c", &opcion);
        if(isdigit(opcion)){
        switch(opcion){
         case '1':
             Consulta();
+            Evento(1);
             break;
         case '2':
             Actualizar();
@@ -232,8 +286,6 @@ int main()
             break;
         case '4':
             {
-
-
             int a = Agregar();
             switch(a){
                 case -1:
@@ -249,7 +301,7 @@ int main()
             break;
             system("PAUSE");
             }
-        case '0':
+        case '5':
             {
             int r = registrarUsuario();
             switch(r){
@@ -264,8 +316,11 @@ int main()
             system("PAUSE");
             break;
             }
-        case '5':
+        case '7':
             printf("Hasta luego");
+            return(0);
+        case '6':
+            ConsultaB();
             return(0);
 
 
