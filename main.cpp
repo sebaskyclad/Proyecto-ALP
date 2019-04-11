@@ -68,6 +68,48 @@ void ConsultaB(){
 	fclose(arch);
 }
 void Actualizar(){
+     system("cls");
+            FILE *file, *fileAux;
+            Articulo ar;
+            fileAux=fopen("InventarioAux.data","wb");
+            file=fopen("Inventario.data","rb");
+            if(!file){
+                printf("No hay nada en el archivo\n");
+            }
+            else{
+                int cb;
+                printf("Escribe el codigo de barra del producto a modificar:\n");
+                fflush(stdin);
+                scanf("%d",&cb);
+                //Recibe los mismo parametros que fwrite
+                while(fread(&ar, sizeof(Articulo),1, file)){
+
+                    if (ar.CB!=cb){
+                        fwrite(&ar, sizeof(Articulo),1, fileAux);
+                    }else{
+                        printf("Digite el nuevo nombre del producto\n");
+                        LeeCadena(ar.nombreMarca);
+                        printf("Digite el nuevo Precio de venta\n");
+                        scanf("%d",&ar.precioVenta);
+                        printf("Digite el nuevo Precio de compra\n");
+                        scanf("%d",&ar.precioCompra);
+                        printf("Digite las nuevas unidades del producto\n");
+                        scanf("%d",&ar.cantidad);
+                        fwrite(&ar, sizeof(Articulo),1, fileAux);
+                    }
+                }
+                fclose(file);
+                fclose(fileAux);
+
+                fileAux=fopen("InventarioAux.data","rb");
+                file=fopen("Inventario.data","wb");
+                while(fread(&ar, sizeof(Articulo),1, fileAux)){
+                    fwrite(&ar, sizeof(Articulo),1, file);
+                }
+
+            }
+            fclose(file);
+            fclose(fileAux);
 }
 void Eliminar(){
             system("cls");
