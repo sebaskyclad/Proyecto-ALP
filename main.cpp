@@ -90,10 +90,12 @@ void Eliminar(){
                     fwrite(&ar, sizeof(Articulo),1, fileAux);
                     }
                 }
+                fclose(file);
+                fclose(fileAux);
+
                 fileAux=fopen("InventarioAux.data","rb");
                 file=fopen("Inventario.data","wb");
                 while(fread(&ar, sizeof(Articulo),1, fileAux)){
-
                     fwrite(&ar, sizeof(Articulo),1, file);
                 }
 
@@ -261,6 +263,7 @@ int main()
     char opcion = '0';
     printf("-*-Bienvenido al sistema de inventario-*-\n");
     while(opcion!='5'){
+    fflush(stdin);
     char opcion = '0';
        system("CLS");
        printf("Seleccione la opcion\n");
